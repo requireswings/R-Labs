@@ -1,0 +1,129 @@
+---
+title: "BEE 550 Intro to R"
+author: "Jennifer Bradley"
+date: "09-24-2024"
+output: html_document # Change this to word_document or pdf_document when ready to submit
+---
+
+```{r setup, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error = TRUE)
+
+# don't forget to copy/paste here all of the libraries required for this week's lab
+library(tidyverse)
+
+theme_set(theme_bw())
+```
+
+```{r}
+install_formats()
+```
+
+## Q1
+47
+
+```{r}
+12 * 3 - 10 / 2 + 16
+```
+## Q2
+-8
+
+```{r}
+12 * (3 - 10 / 2) + 16
+```
+## Q3
+4
+
+```{r}
+2 ^ 3 - sqrt(16) + log(1)
+```
+## Q4
+47
+
+```{r}
+x = 12 
+y = 3
+z = 10
+w = 2
+t = 16
+
+x * y - z / w + t
+```
+## Q5
+The result of exp(log(x)) is always x.
+
+```{r}
+x = 6
+
+exp(log(x))
+```
+
+## Q6
+The area is 6.
+
+```{r}
+tri_area = function(L1, L2, L3){
+  p = (L1 + L2 + L3) / 2
+  area = sqrt(p * (p - L1) * (p - L2) * (p - L3))
+  return(area)
+}
+
+tri_area(3, 4, 5)
+```
+
+## Q7
+-2
+
+```{r}
+v = c(3, 5, -2, 0, 1)
+
+v[c(3)]
+```
+
+## Q8
+v[2:4] lists the 2nd, 3rd, and 4th elements of vector v. It seems that the : operator represents "until" or "through." In v[x:y] all elements in the vector v starting with the x'th element until (and including) the y'th element are pulled.
+
+```{r, error = TRUE}
+v[2:4]
+```
+
+## Q9
+The output of mean(v1 + v2) is -1.2
+The output of sum(v1 + v2) / length(v1 + v2) is the same, -1.2
+
+```{r}
+v1 = v
+v2 = c(-5, -1, -9, 2, 0)
+print(mean(v1 + v2))
+
+print(sum(v1 + v2) / length(v1 + v2))
+```
+
+## Q10
+
+
+```{r}
+my_vector = mean(v1 + v2)
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
