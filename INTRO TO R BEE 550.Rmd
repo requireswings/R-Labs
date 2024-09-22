@@ -100,11 +100,10 @@ print(sum(v1 + v2) / length(v1 + v2))
 
 ## Q10
 
-
 ```{r}
 my_vector = mean(v1 + v2)
 
-
+sort(my_vector)
 ```
 
 
