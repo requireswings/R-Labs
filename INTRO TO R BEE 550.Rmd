@@ -106,6 +106,37 @@ my_vector = mean(v1 + v2)
 sort(my_vector)
 ```
 
+## Q11
+
+```{r}
+q11_matrix = matrix(c(4, -2, 0, 1, 1, 7), nrow = 3, ncol = 2)
+q11_matrix
+```
+
+## Q12
+The str() function prints the data type of the variable, and the variable itself.
+```{r}
+my_dogs_age = 3.5
+my_dogs_name = 'Hobbes'
+my_cats_name = NA
+is_my_dog_a_puppy = my_dogs_age < 1
+
+mda = str(my_dogs_age)
+mdn = str(my_dogs_name)
+mcn = str(my_cats_name)
+imdap = str(is_my_dog_a_puppy)
+
+```
+
+
+## Q13
+
+
+```{r}
+
+
+```
+
 
 
 
