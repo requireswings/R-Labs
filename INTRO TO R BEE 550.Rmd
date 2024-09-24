@@ -14,10 +14,6 @@ library(tidyverse)
 theme_set(theme_bw())
 ```
 
-```{r}
-install_formats()
-```
-
 ## Q1
 47
 
@@ -114,7 +110,7 @@ q11_matrix
 ```
 
 ## Q12
-The str() function prints the data type of the variable, and the variable itself.
+The str() function prints the data type of the object fed to the function, and displays the object itself.
 ```{r}
 my_dogs_age = 3.5
 my_dogs_name = 'Hobbes'
@@ -130,10 +126,45 @@ imdap = str(is_my_dog_a_puppy)
 
 
 ## Q13
+The command is attempting to multiply a non-numeric data type (string) to a numeric type (integer). As this is not possible, R gives the error.
 
+```{r error = TRUE}
+my_pet_info =
+  list(
+    my_dogs_age,
+    my_dogs_name,
+    my_cats_name,
+    is_my_dog_a_puppy
+  )
+
+my_dog_info =
+  list(
+    age = my_dogs_age,
+    name = my_dogs_name,
+    puppy = is_my_dog_a_puppy
+  )
+
+2 * my_dog_info$name
+
+```
+
+## Q14
+20.09062
+This is the average of all mpg values in the data frame; the average mpg of the cars.
 
 ```{r}
+mean(mtcars$mpg)
+```
 
+
+## Q15
+```{r}
+var(mtcars$cyl)
+```
+
+## Q16
+
+```{r}
 
 ```
 
