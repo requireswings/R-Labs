@@ -2,7 +2,7 @@
 title: "BEE 550 Intro to R"
 author: "Jennifer Bradley"
 date: "09-24-2024"
-output: html_document # Change this to word_document or pdf_document when ready to submit
+output: pdf_document # Change this to word_document or pdf_document when ready to submit
 ---
 
 ```{r setup, include=FALSE, message=FALSE}
@@ -10,8 +10,8 @@ knitr::opts_chunk$set(echo = TRUE, error = TRUE)
 
 # don't forget to copy/paste here all of the libraries required for this week's lab
 library(tidyverse)
-library("ggplot2")
-library("gridExtra")
+library(ggplot2)
+library(gridExtra)
 
 theme_set(theme_bw())
 ```
