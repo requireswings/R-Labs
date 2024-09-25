@@ -10,6 +10,8 @@ knitr::opts_chunk$set(echo = TRUE, error = TRUE)
 
 # don't forget to copy/paste here all of the libraries required for this week's lab
 library(tidyverse)
+library("ggplot2")
+library("gridExtra")
 
 theme_set(theme_bw())
 ```
@@ -163,27 +165,164 @@ var(mtcars$cyl)
 ```
 
 ## Q16
+```{r echo = FALSE}
+characters = 
+  tibble(
+    name = c('Calvin', 'Hobbes', 'Garfield', 'Popeye', 'Bugs Bunny', 'Lisa Simpson', 'Woodstock'),
+    species = c('human', 'tiger', 'cat', 'human', 'rabbit', 'human', 'canary'),
+    comic_strip = c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, TRUE),
+    year_created = c(1985, 1985, 1978, 1929, 1940, 1987, 1967)
+  )
+```
 
 ```{r}
-
+characters |>
+  arrange(characters, year_created)
 ```
 
 
+## Q17
 
+```{r}
+my_tibble =
+  mtcars |>
+  rownames_to_column(var = 'model') |>
+  as_tibble() |>
+  select(model, mpg, cyl, hp) |>
+  mutate(kml = mpg * 0.43) |>
+  filter(mpg > 22)
+my_tibble
+```
 
+## Q18
+New_abundance is 16098, the uncertainty is 834
 
+```{r echo = FALSE}
+github_address = 'https://github.com/rafaeldandrea/BIO-356/blob/master/gray_whales.xlsx?raw=true'
 
+whale_dataset = 
+  rio::import(github_address, range = 'B6:G28') |>
+  as_tibble()
+```
 
+## Q19
+```{r}
+plot_whales =
+  whale_dataset |>
+  ggplot(aes(End_dates, New_abundance)) +
+  geom_point() +
+  geom_line()
+plot_whales
+```
 
+## Q20
+```{r}
+plot_whales =
+  whale_dataset |>
+  ggplot(aes(End_dates, New_abundance)) +
+  geom_line(color = 'green') +
+  geom_errorbar(
+    aes(
+      x = End_dates,
+      ymin = New_abundance + New_SE,
+      ymax = New_abundance - New_SE
+    ),
+    color = 'blue'
+  ) +
+  geom_point(color = 'red') +
+  labs(
+    x = 'Calendar Year',
+    y = 'Population Size'
+  ) +
+  theme(aspect.ratio = 1) +
+  ggtitle('Whale population estimates')
+plot_whales
+```
 
+## Q21
+"Error: unexpected '=' in:
+"  print('Two is greater than three')
+} else if(2 =" "
 
+```{r error = TRUE}
+if(2 > 3){
+  print('Two is greater than three')
+} else if(2 = 3){ 
+  print('Two is equal to three')
+} else {
+  print('Two is less than three')
+}
+```
 
+## Q22
+```{r}
+for(i in 1:5){
+  if(i%%2 != 0){
+    print(i)
+  }
+}
+```
 
+## Q23
+The growth rate is less than 1, so the population declines.
 
+```{r}
+lambda = 0.9
+N = 50
+N_vector = N
+for(year in 1:20){
+  N = round(lambda * N)
+  N_vector = c(N_vector, N)
+}
 
+data = 
+  tibble(
+    year = 0:20,
+    abundance = N_vector
+  )
 
+plot = 
+  data |>
+  ggplot(aes(year, abundance)) +
+  geom_line(color = 'grey') +
+  geom_point()
 
+plot
+```
 
+## Q24
+The range of the plot with a lower standard deviation is smaller, and the data is more centered around the mean.
+```{r}
+set.seed(1)
+
+random_numbers1 = rnorm(n = 1000, mean = 0, sd = 1)
+
+random_data1 = 
+  tibble(
+    x = random_numbers1
+  )
+
+plot_data1 = 
+  random_data1 |>
+  ggplot(aes(x)) +
+  geom_histogram(bins = 30, fill = 'darkred') +
+  xlim(c(-5, 5))
+
+random_numbers2 = rnorm(n = 1000, mean = 0, sd = 0.4)
+
+random_data2 = 
+  tibble(
+    x = random_numbers2
+  )
+
+plot_data2 =
+  random_data2 |>
+  ggplot(aes(x)) +
+  geom_histogram(bins = 30, fill = 'darkblue') +
+  xlim(c(-5, 5))
+
+grid.arrange(plot_data1, plot_data2)
+```
 
 
 
