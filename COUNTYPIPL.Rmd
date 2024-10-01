@@ -1,0 +1,15 @@
+---
+title: "CountyPIPL"
+author: "Jennifer Bradley"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+
+setwd('C:/Users/Owner/CountyPIPL')
+
+SmithPoint2023 <- read.csv('Smith Point 2023 Nest Fates.csv', header = TRUE)
+```
+
