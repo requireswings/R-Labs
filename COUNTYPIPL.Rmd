@@ -13,3 +13,16 @@ setwd('C:/Users/Owner/CountyPIPL')
 SmithPoint2023 <- read.csv('Smith Point 2023 Nest Fates.csv', header = TRUE)
 ```
 
+```{r}
+Smith_Point23_Floating_NestFate_Table <- table(SmithPoint2023$Floating, SmithPoint2023$NestFate)
+
+chisq.test(Smith_Point23_Floating_NestFate_Table)
+```
+
+```{r}
+Smith_Point23_Banding_NestFate_Table <- table(SmithPoint2023$Banded, SmithPoint2023$NestFate)
+
+chisq.test(Smith_Point23_Banding_NestFate_Table)
+```
+
+
