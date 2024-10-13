@@ -1,0 +1,264 @@
+---
+title: "BEE 550 Many Species Competition "
+author: "Jennifer Bradley 112 496 757"
+date: "10/13/2024"
+output: html_document # Change this to word_document or pdf_document when ready to submit
+---
+
+```{r setup, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error = TRUE)
+
+library(tidyverse)
+library(gridExtra) ## for plotting function grid.arrange()
+library(deSolve) ## for ODE model
+library(magrittr) ## for pipe symbol %<>%
+library(knitr) ## for table-viewing function table()
+library(gganimate) ## for plotting animations with ggplot
+
+theme_set(theme_bw())
+theme_update(
+  panel.grid = element_blank(),
+  aspect.ratio = 1)
+```
+
+
+
+## Q1
+
+The diatom and green algae occupy the same niche (rely on nitrate)-- therefore cannot coexist when not "checked" by the predation pressure of the copepod. 
+
+Some regulating factors in this example are: the nitrate (resource), the copepod (predator), members of its own species (intraspecific competition), and member of the other species (interspecific competition).
+
+When the copepod is not present, the diatom and green algae population are only regulated mainly by what's listed above. These prey populations grow too large in size to be able to both be sustained by the nitrogen resource, and one competitively excludes the other-- ie. there is too much niche overlap, or not enough niche differentiation. 
+
+When the copepod is present, the predation of the green algae and diatom by the copepod limits their growth enough that both populations can be sustained on that limited nitrogen resource.
+
+
+## Q2
+
+The relative abundances of each of the three species are not evenly distributed throughout the coffee shrub. P. protensa dominates the base of the shrub at lower heights, and actually completely excludes C. carinata, which is only dominant on the higher areas of the shrub, while P. syanthropica is a more intermediate species that is most dominant at heights around 1 meter above the base of the plant.
+
+
+## Q3
+
+When C. carinata is removed, the range of P. protensa is the same-- this implies that C. carinata and P. protensa do not interfere with eachother directly/affect eachother's distribution. However, P. syanthropica replaces C. carinata in the higher portions of the coffee shrub in higher abundances than the intermidiate heights it occupies when all three species are present. This implies that P. syanthropica's realized niche is only around 1-2 meters up the plant, while its fundamental niche ranges from about 1-4 meters up the plant. P. protensa's fundamental and realized niche are approximately equal in this scenario. It can also be inferred from this part of the trial that C. carinata is a specialist in the high portions of the plant that outcompetes the generalist P. syanthropica when present, even though P. syanthropica appears to prefer higher areas of the plant as shown by it's higher abundances in these areas.
+
+When P. syanthropica is removed, this trial also supports that C. carinata and P. protensa do not interfere with eachother significantly. C. carinata and P. protensa are both specialists occupying different niches (areas of the plant) with minimal overlap, while the generalist P. syanthropica competes with both specialist species in the intermediate areas of the plant.
+
+
+## Q4
+
+Terms both coined by Charles Hutchinson, fundamental niche is the summation of all environmental and resource conditions that would support the existence of a species, without consideration of other ecological factors such as interspecific competition-- "the overall potentialities of a species." Realized niche is where these species are actually observed in "the real world" when facing competition and stochastic forces-- described as a "more limited spectrum of conditions that allow it to exist."
+
+
+## Q5
+
+The results are consistent with character diplacement theory. When more M. guttatus (the monocolor flower) is present, there will be more competition among both flower species for pollinators when they look the same. It is in the best interest of M. bicolor to produce more offspring with the bicolor phenotype, to avoid pollinators from carrying pollen between species instead of among them in areas where their distribution overlaps.
+
+
+## Q6
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+```{r echo = FALSE}
+LV_Model = 
+  function(
+    initial_N,
+    intrinsic_growth_rate,
+    carrying_capacity,
+    community_matrix,
+    final_time,
+    time_step
+  ){
+      LV = 
+        function(t, state, parameters){
+           with(as.list(parameters), {
+             N = state
+             dNdt = as.numeric(r * N * (1 - A %*% N / K))
+             list(dNdt)
+           })
+          }
+      
+      times = seq(0, final_time, by = time_step)
+      
+      parameters = 
+        list(
+          r = intrinsic_growth_rate,
+          K = carrying_capacity,
+          A = community_matrix
+        )
+      
+      state = initial_N
+      
+      out = ode(y = state, times = times, func = LV, parms = parameters)
+      
+      return(
+        list(
+          parameters = 
+            list(
+              intrinsic_growth_rate, 
+              carrying_capacity, 
+              community_matrix
+            ),
+          initial_conditions = initial_N,
+          state = out
+        )
+      )
+   }
+
+# Plotting the model outcome
+Plot_LV_timeseries = 
+  function(model){
+    as.data.frame(model$state) |>
+    pivot_longer(-time, names_to = 'species', values_to = 'abundance') |>
+    ggplot(aes(time, abundance, group = species, color = species)) +
+    geom_line(size = 1) +
+    expand_limits(y = 0)
+  }
+
+Plot_LV_stemplot = 
+  function(trait, model){
+    tibble(trait = trait, abundance = round(model$state[nrow(model$state), -1])) |>
+    ggplot() +
+    geom_segment(aes(trait, abundance, xend = trait, yend = abundance - abundance)) +
+    geom_point(aes(trait, abundance))
+  }
+```
+
+
+## Q7
+
+G. fortis is its own strongest competitor (intraspecific competition, aii). 
+
+
+## Q8
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+## Q9
+
+The value of aii is 1.0 when there is no trait difference-- because there will be minimal (to no) niche differentiation and intraspecific competition will be maximal.
+
+
+## Q10
+
+If there is a proportional difference in seed sizes on the island, each finch species will have a larger K than if there was little seed size differences (there would be more competition for said resource, and some species could even be competitively excluded).
+
+```{r echo = FALSE} 
+number_of_species = 3
+scale = .2
+trait = c(-.15, 0, .15)
+K = 1000
+N0 = c(K, 10, K)
+r = .1
+final_year = 500
+
+trait_differences = as.matrix(dist(trait))
+community_matrix = exp(-(trait_differences / scale) ^ 4)
+
+model = 
+  LV_Model(
+    initial_N = N0, 
+    intrinsic_growth_rate = c(r, r, r), 
+    carrying_capacity = c(K, K, K), 
+    community_matrix = community_matrix, 
+    final_time = final_year, 
+    time_step = 1
+  )
+
+plot_timeseries = 
+  Plot_LV_timeseries(model) + 
+  theme(legend.position = 'none') +
+  theme(aspect.ratio = 1)
+
+plot_stemplot = 
+  Plot_LV_stemplot(trait = trait, model = model) +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank()
+  ) +
+  theme(aspect.ratio = 1) +
+  xlim(c(-.5, .5))
+
+gridExtra::grid.arrange(plot_timeseries, plot_stemplot, nrow = 1)
+``` 
+
+## Q11
+```{r}
+gridExtra::grid.arrange(plot_timeseries, plot_stemplot, nrow = 1)
+```
+
+The residents are not affected by the presence of the invader, and the invader is not able to establish itself/crashes to zero. This is because there was too much niche overlap between all 3 species for them all to coexist. The resident species are already established at high abundances, and the invader species coming into the system is not only threatened by competition, but also stochasticity at low starting populations.
+
+
+## Q12
+
+With maximal trait differentiation, there will be the least amount of interspecific competition (aij). The more separation on the x-axis of this model, the less niche overlap.
+
+```{r echo = FALSE}
+number_of_species = 100
+scale = 0.1
+trait = seq(-.5, .5, length = number_of_species)
+K = 1000
+N0 = rep(K, number_of_species)
+r = .1
+final_year = 5000
+
+trait_differences = as.matrix(dist(trait))
+community_matrix = exp(-(trait_differences / scale) ^ 4)
+
+model = 
+  LV_Model(
+    initial_N = N0, 
+    intrinsic_growth_rate = rep(r, number_of_species), 
+    carrying_capacity = rep(K, number_of_species), 
+    community_matrix = community_matrix, 
+    final_time = final_year, 
+    time_step = 1
+  )
+```
+
+## Q13
+
+8 niches
+
+```{r}
+Plot_LV_stemplot(trait = trait, model = model)
+```
+
+
+## Q14
+
+The noise in the animation is due to stochastic forces on the population incorporated by the model-- unpredictable events of dispersal and fluctuations in birth and death rates. 
+
+
+## Q15
+
+Immigration is an additional source of population growth separate from birth rates. With this additional source of seeds, even as birth rates slow as the population reaches its carrying capacity, immigration will maintain the species' high abundance.These populations will be more difficult for an invading species to compete with.
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+## Q16
+
+The 3 subcanopy peaks of light, in addition to where sunlight first reaches the canopy at the top corresponds to the 4 clusters (or niches) of species in the results of D'Andrea et al 2020.
+
+
+## Q17
+
+The methodology of D'Andrea et al 2020 would predict that 3 height clusters in Harvard Forest: 2 sub-canopy clusters, and the top of the canopy as the third.
+
+
+## Q18
+
+The sample size N of species in Harvard Forest is about 1/10th of that in BCI. As a result there would likely be less clusters to compare, and possibly less "room" for niche differentiation. 
+
+
+
+
+
+
+
+
+
