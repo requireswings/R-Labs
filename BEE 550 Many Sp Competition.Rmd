@@ -53,12 +53,12 @@ Terms both coined by Charles Hutchinson, fundamental niche is the summation of a
 
 ## Q5
 
-The results are consistent with character diplacement theory. When more M. guttatus (the monocolor flower) is present, there will be more competition among both flower species for pollinators when they look the same. It is in the best interest of M. bicolor to produce more offspring with the bicolor phenotype, to avoid pollinators from carrying pollen between species instead of among them in areas where their distribution overlaps.
+The results are consistent with character displacement theory. When more M. guttatus (the monocolor flower) is present, there will be more competition among both flower species for pollinators when they look the same. It is in the best interest of M. bicolor to produce more offspring with the bicolor phenotype, to avoid pollinators from carrying pollen between species instead of among them in areas where their distribution overlaps.
 
 
 ## Q6
 
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+In the third trial, the bicolor morph has a higher fitness and outcompetes the monomorph when in the presence of their monomorph competitor, E. guttata. This aligns with the hypothesis that bicolor phenotypes 
 
 
 ```{r echo = FALSE}
@@ -134,6 +134,7 @@ G. fortis is its own strongest competitor (intraspecific competition, aii).
 
 ## Q8
 
+If there is too much niche overlap for there coexistence in the above scenario, the presence of a predator that consumes the finches could lower their abundances enough so that there is enough resources to share among them.
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 
@@ -236,7 +237,7 @@ The noise in the animation is due to stochastic forces on the population incorpo
 
 ## Q15
 
-Immigration is an additional source of population growth separate from birth rates. With this additional source of seeds, even as birth rates slow as the population reaches its carrying capacity, immigration will maintain the species' high abundance.These populations will be more difficult for an invading species to compete with.
+Immigration is an additional source of individuals towards population growth separate from birth rates. With this additional source of seeds, even as birth rates slow and the population reaches its carrying capacity, immigration will maintain the species' high abundance.These populations will be more difficult for an invading species to compete with.
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 
