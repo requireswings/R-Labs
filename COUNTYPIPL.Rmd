@@ -11,18 +11,26 @@ knitr::opts_chunk$set(echo = TRUE)
 setwd('C:/Users/Owner/CountyPIPL')
 
 SmithPoint2023 <- read.csv('Smith Point 2023 Nest Fates.csv', header = TRUE)
+SmithPoint2022 <- read.csv('Smith Point 2022 Nest Fates.csv', header = TRUE)
 ```
 
+## Smith Point 2023
+
 ```{r}
-Smith_Point23_Floating_NestFate_Table <- table(SmithPoint2023$Floating, SmithPoint2023$NestFate)
+Smith_Point23_Floating_NestFate_Table <- table(SmithPoint2023$Floating, SmithPoint2023$NestFate) ##loading a table of floating:nest fate values
 
 chisq.test(Smith_Point23_Floating_NestFate_Table)
 ```
 
 ```{r}
-Smith_Point23_Banding_NestFate_Table <- table(SmithPoint2023$Banded, SmithPoint2023$NestFate)
+Smith_Point23_Banding_NestFate_Table <- table(SmithPoint2023$Banded, SmithPoint2023$NestFate) ##loading a table of banding:nest fate values
 
 chisq.test(Smith_Point23_Banding_NestFate_Table)
+```
+## Smith Point 2022
+
+```{r}
+
 ```
 
 

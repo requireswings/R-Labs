@@ -135,7 +135,7 @@ G. fortis is its own strongest competitor (intraspecific competition, aii).
 ## Q8
 
 If there is too much niche overlap for there coexistence in the above scenario, the presence of a predator that consumes the finches could lower their abundances enough so that there is enough resources to share among them.
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (intra > inter)
 
 
 ## Q9
